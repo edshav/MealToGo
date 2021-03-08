@@ -5,6 +5,7 @@ import {
   StatusBar,
   NativeSyntheticEvent,
   TextInputChangeEventData,
+  FlatList,
 } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { Restaurant } from "../interfaces";
@@ -33,12 +34,6 @@ const SearchContainer = styled.View`
   padding: ${props => props.theme.space[3]};
 `;
 
-const StyledList = styled.View`
-  flex: 1;
-  padding: ${props => props.theme.space[3]};
-  background-color: ${props => props.theme.colors.bg.secondary};
-`;
-
 export const RestaurantsScreen: React.FC = () => {
   const [term, setTerm] = React.useState("");
   const onChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -50,9 +45,26 @@ export const RestaurantsScreen: React.FC = () => {
       <SearchContainer>
         <Searchbar value={term} onChange={onChange} />
       </SearchContainer>
-      <StyledList>
-        <RestaurantInfoCard restaurant={restaurant} />
-      </StyledList>
+      <FlatList
+        data={[
+          { ...restaurant, name: "One" },
+          { ...restaurant, name: "Two" },
+          { ...restaurant, name: "Three" },
+          { ...restaurant, name: "Four" },
+          { ...restaurant, name: "Five" },
+          { ...restaurant, name: "Six" },
+          { ...restaurant, name: "Seven" },
+          { ...restaurant, name: "Eight" },
+          { ...restaurant, name: "Nine" },
+          { ...restaurant, name: "Ten" },
+          { ...restaurant, name: "Eleven" },
+          { ...restaurant, name: "Twelve" },
+        ]}
+        renderItem={item => <RestaurantInfoCard restaurant={item.item} />}
+        keyExtractor={item => item.name}
+        // eslint-disable-next-line react-native/no-inline-styles
+        contentContainerStyle={{ padding: 16 }}
+      />
     </Container>
   );
 };
