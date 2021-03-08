@@ -1,6 +1,6 @@
 export type Restaurant = {
   name: string;
-  icon: unknown;
+  icon: string;
   photos: string[];
   address: string;
   isOpenNow: boolean;
