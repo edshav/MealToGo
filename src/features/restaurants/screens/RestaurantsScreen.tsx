@@ -1,8 +1,6 @@
 import * as React from "react";
 import styled from "styled-components/native";
 import {
-  SafeAreaView,
-  StatusBar,
   NativeSyntheticEvent,
   TextInputChangeEventData,
   FlatList,
@@ -10,6 +8,7 @@ import {
 import { Searchbar } from "react-native-paper";
 import { Restaurant } from "../interfaces";
 import { RestaurantInfoCard } from "../components/RestaurantInfoCard/RestaurantInfoCard";
+import { SafeAria } from "components/SafeAria";
 
 const restaurant: Restaurant = {
   name: "Some Restaurant",
@@ -24,12 +23,6 @@ const restaurant: Restaurant = {
   isClosedTemporarily: true,
 };
 
-const Container = styled(SafeAreaView)`
-  flex: 1;
-  background-color: ${props => props.theme.colors.bg.primary};
-  ${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px;`}
-`;
-
 const SearchContainer = styled.View`
   padding: ${props => props.theme.space[3]};
 `;
@@ -41,7 +34,7 @@ export const RestaurantsScreen: React.FC = () => {
   };
 
   return (
-    <Container>
+    <SafeAria>
       <SearchContainer>
         <Searchbar value={term} onChange={onChange} />
       </SearchContainer>
@@ -65,6 +58,6 @@ export const RestaurantsScreen: React.FC = () => {
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{ padding: 16 }}
       />
-    </Container>
+    </SafeAria>
   );
 };
