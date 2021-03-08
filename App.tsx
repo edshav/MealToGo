@@ -20,6 +20,7 @@ import { RestaurantsScreen } from "features/restaurants/screens/RestaurantsScree
 import { theme } from "infrastructure/theme";
 import { ThemeProvider } from "styled-components/native";
 import { SafeAria } from "components/SafeAria";
+import { RestaurantsContextProvider } from "services/restaurants/restaurants.context";
 
 enum TabScreenName {
   Restaurants = "Restaurants",
@@ -82,31 +83,33 @@ export default function App() {
     navigation: any;
   }) => BottomTabNavigationOptions = ({ route }) => ({
     tabBarIcon: ({ color, size }) => {
-      const iconname = variantIcon[route.name as TabScreenName][Platform.OS];
+      const iconName = variantIcon[route.name as TabScreenName][Platform.OS];
 
-      return <Ionicons name={iconname} size={size} color={color} />;
+      return <Ionicons name={iconName} size={size} color={color} />;
     },
   });
 
   return (
     <>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Tab.Navigator
-            screenOptions={props => createScreenOptions(props)}
-            tabBarOptions={{
-              activeTintColor: "tomato",
-              inactiveTintColor: "gray",
-            }}
-          >
-            <Tab.Screen
-              name={TabScreenName.Restaurants}
-              component={RestaurantsScreen}
-            />
-            <Tab.Screen name={TabScreenName.Map} component={Map} />
-            <Tab.Screen name={TabScreenName.Settings} component={Settings} />
-          </Tab.Navigator>
-        </NavigationContainer>
+        <RestaurantsContextProvider>
+          <NavigationContainer>
+            <Tab.Navigator
+              screenOptions={props => createScreenOptions(props)}
+              tabBarOptions={{
+                activeTintColor: "tomato",
+                inactiveTintColor: "gray",
+              }}
+            >
+              <Tab.Screen
+                name={TabScreenName.Restaurants}
+                component={RestaurantsScreen}
+              />
+              <Tab.Screen name={TabScreenName.Map} component={Map} />
+              <Tab.Screen name={TabScreenName.Settings} component={Settings} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </RestaurantsContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>

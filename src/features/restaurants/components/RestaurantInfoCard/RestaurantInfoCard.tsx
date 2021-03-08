@@ -1,6 +1,5 @@
 import * as React from "react";
 import { SvgXml } from "react-native-svg";
-import { Restaurant } from "../../interfaces";
 import star from "img/star";
 import open from "img/open";
 import { Spacer } from "components/Spacer";
@@ -14,6 +13,7 @@ import {
   SubSection,
   Address,
 } from "./styles";
+import { Restaurant } from "services/restaurants/restaurants.interfaces";
 
 type Props = {
   restaurant: Restaurant;
@@ -23,17 +23,23 @@ export const RestaurantInfoCard: React.FC<Props> = ({
   restaurant: {
     name,
     photos,
-    address,
     rating,
-    isOpenNow,
     icon,
+    isOpenNow,
     isClosedTemporarily,
+    vicinity,
   },
 }) => {
-  const ratingArray = Array.from(new Array(Math.ceil(rating)));
+  const ratingArray = Array.from(new Array(Math.ceil(rating ?? 0)));
   return (
     <StyledCard elevation={5}>
-      <StyledCover source={{ uri: photos[0] }} />
+      <StyledCover
+        source={{
+          uri:
+            photos[0]?.photo_reference ??
+            "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
+        }}
+      />
       <Info>
         <Typography variant="label">{name}</Typography>
         <Section>
@@ -53,10 +59,16 @@ export const RestaurantInfoCard: React.FC<Props> = ({
                 <SvgXml xml={open} width={20} height={20} />
               </Spacer>
             )}
-            <Icon source={{ uri: icon }} />
+            {icon && (
+              <Icon
+                source={{
+                  uri: icon,
+                }}
+              />
+            )}
           </SubSection>
         </Section>
-        <Address>{address}</Address>
+        <Address>{vicinity}</Address>
       </Info>
     </StyledCard>
   );

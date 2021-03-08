@@ -2,6 +2,7 @@
   "extends": [
     "@react-native-community",
     "plugin:prettier/recommended",
-    "prettier"
+    "prettier",
+    "plugin:react-hooks/recommended"
   ]
 }

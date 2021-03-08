@@ -6,28 +6,30 @@ import {
   FlatList,
 } from "react-native";
 import { Searchbar } from "react-native-paper";
-import { Restaurant } from "../interfaces";
+// import { Restaurant } from "../interfaces";
 import { RestaurantInfoCard } from "../components/RestaurantInfoCard/RestaurantInfoCard";
 import { SafeAria } from "components/SafeAria";
+import { RestaurantsContext } from "services/restaurants/restaurants.context";
 
-const restaurant: Restaurant = {
-  name: "Some Restaurant",
-  icon:
-    "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
-  photos: [
-    "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
-  ],
-  address: "100 some random street",
-  isOpenNow: true,
-  rating: 4,
-  isClosedTemporarily: true,
-};
+// const restaurant: Restaurant = {
+//   name: "Some Restaurant",
+//   icon:
+//     "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
+//   photos: [
+//     "https://www.foodiesfeed.com/wp-content/uploads/2019/06/top-view-for-box-of-2-burgers-home-made-600x899.jpg",
+//   ],
+//   address: "100 some random street",
+//   isOpenNow: true,
+//   rating: 4,
+//   isClosedTemporarily: true,
+// };
 
 const SearchContainer = styled.View`
   padding: ${props => props.theme.space[3]};
 `;
 
 export const RestaurantsScreen: React.FC = () => {
+  const { restaurants } = React.useContext(RestaurantsContext);
   const [term, setTerm] = React.useState("");
   const onChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     setTerm(e.nativeEvent.text);
@@ -39,22 +41,9 @@ export const RestaurantsScreen: React.FC = () => {
         <Searchbar value={term} onChange={onChange} />
       </SearchContainer>
       <FlatList
-        data={[
-          { ...restaurant, name: "One" },
-          { ...restaurant, name: "Two" },
-          { ...restaurant, name: "Three" },
-          { ...restaurant, name: "Four" },
-          { ...restaurant, name: "Five" },
-          { ...restaurant, name: "Six" },
-          { ...restaurant, name: "Seven" },
-          { ...restaurant, name: "Eight" },
-          { ...restaurant, name: "Nine" },
-          { ...restaurant, name: "Ten" },
-          { ...restaurant, name: "Eleven" },
-          { ...restaurant, name: "Twelve" },
-        ]}
-        renderItem={item => <RestaurantInfoCard restaurant={item.item} />}
-        keyExtractor={item => item.name}
+        data={restaurants}
+        renderItem={({ item }) => <RestaurantInfoCard restaurant={item} />}
+        keyExtractor={item => item.place_id}
         // eslint-disable-next-line react-native/no-inline-styles
         contentContainerStyle={{ padding: 16 }}
       />
