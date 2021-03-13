@@ -8,7 +8,7 @@ export const locationRequest = (
   return new Promise((resolve, reject) => {
     const locationMock = locations[searchTerm as keyof typeof locations];
     if (!locationMock) {
-      reject("not found");
+      reject(new Error("not found"));
     }
     resolve(locationMock);
   });

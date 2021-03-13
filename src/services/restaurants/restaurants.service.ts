@@ -66,7 +66,7 @@ export const restaurantsRequest = (
   return new Promise((resolve, reject) => {
     const mock = mocks[location];
     if (!mock) {
-      reject("not found");
+      reject(new Error("not found"));
     }
     resolve(mock);
   });

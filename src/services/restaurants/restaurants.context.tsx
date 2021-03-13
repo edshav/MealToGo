@@ -18,17 +18,17 @@ export const RestaurantsContextProvider: React.FC = ({ children }) => {
 
   React.useEffect(() => {
     const retrieveRestaurants = async () => {
-      try {
-        setLoading(true);
-        setTimeout(async () => {
+      setLoading(true);
+      setTimeout(async () => {
+        try {
           const data = await restaurantsRequest();
           setLoading(false);
           setRestaurants(restaurantsTransform(data));
-        }, 3000);
-      } catch (err) {
-        setLoading(false);
-        setError(err.message);
-      }
+        } catch (err) {
+          setLoading(false);
+          setError(err.message);
+        }
+      }, 3000);
     };
     retrieveRestaurants();
   }, []);
