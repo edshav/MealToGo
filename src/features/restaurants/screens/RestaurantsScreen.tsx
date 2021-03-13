@@ -10,6 +10,7 @@ import { Searchbar } from "react-native-paper";
 import { RestaurantInfoCard } from "../components/RestaurantInfoCard/RestaurantInfoCard";
 import { SafeAria } from "components/SafeAria";
 import { RestaurantsContext } from "services/restaurants/restaurants.context";
+import { SpinnerAndError } from "components/SpinnerAndError";
 
 // const restaurant: Restaurant = {
 //   name: "Some Restaurant",
@@ -29,7 +30,7 @@ const SearchContainer = styled.View`
 `;
 
 export const RestaurantsScreen: React.FC = () => {
-  const { restaurants } = React.useContext(RestaurantsContext);
+  const { restaurants, loading, error } = React.useContext(RestaurantsContext);
   const [term, setTerm] = React.useState("");
   const onChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     setTerm(e.nativeEvent.text);
@@ -40,13 +41,15 @@ export const RestaurantsScreen: React.FC = () => {
       <SearchContainer>
         <Searchbar value={term} onChange={onChange} />
       </SearchContainer>
-      <FlatList
-        data={restaurants}
-        renderItem={({ item }) => <RestaurantInfoCard restaurant={item} />}
-        keyExtractor={item => item.place_id}
-        // eslint-disable-next-line react-native/no-inline-styles
-        contentContainerStyle={{ padding: 16 }}
-      />
+      <SpinnerAndError loading={loading} error={error}>
+        <FlatList
+          data={restaurants}
+          renderItem={({ item }) => <RestaurantInfoCard restaurant={item} />}
+          keyExtractor={item => item.place_id}
+          // eslint-disable-next-line react-native/no-inline-styles
+          contentContainerStyle={{ padding: 16 }}
+        />
+      </SpinnerAndError>
     </SafeAria>
   );
 };

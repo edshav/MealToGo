@@ -5,22 +5,18 @@ export type PhotoDocument = {
   width?: number | null;
 };
 
+export type RestaurantLocationDocument = {
+  lat?: number | null;
+  lng?: number | null;
+};
+
 export type RestaurantDocument = {
   business_status: "OPERATIONAL" | "CLOSED_TEMPORARILY" | null;
   geometry?: {
-    location?: {
-      lat?: number | null;
-      lng?: number | null;
-    } | null;
+    location?: RestaurantLocationDocument | null;
     viewport?: {
-      northeast?: {
-        lat?: number | null;
-        lng?: number | null;
-      } | null;
-      southwest?: {
-        lat?: number | null;
-        lng?: number | null;
-      } | null;
+      northeast?: RestaurantLocationDocument | null;
+      southwest?: RestaurantLocationDocument | null;
     } | null;
   } | null;
   icon?: string | null;
@@ -44,6 +40,8 @@ export type RestaurantsResponse = {
 };
 
 export type Photo = Required<PhotoDocument>;
+
+export type RestaurantLocation = Required<RestaurantLocationDocument>;
 
 export type Restaurant = Required<RestaurantDocument> & {
   isOpenNow: boolean;
