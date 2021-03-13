@@ -15,6 +15,7 @@ export const RestaurantsContextProvider: React.FC = ({ children }) => {
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string>();
+
   React.useEffect(() => {
     const retrieveRestaurants = async () => {
       try {

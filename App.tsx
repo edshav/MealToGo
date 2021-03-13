@@ -21,6 +21,7 @@ import { theme } from "infrastructure/theme";
 import { ThemeProvider } from "styled-components/native";
 import { SafeAria } from "components/SafeAria";
 import { RestaurantsContextProvider } from "services/restaurants/restaurants.context";
+import { LocationContextProvider } from "services/location/location.context";
 
 enum TabScreenName {
   Restaurants = "Restaurants",
@@ -92,24 +93,29 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <RestaurantsContextProvider>
-          <NavigationContainer>
-            <Tab.Navigator
-              screenOptions={props => createScreenOptions(props)}
-              tabBarOptions={{
-                activeTintColor: "tomato",
-                inactiveTintColor: "gray",
-              }}
-            >
-              <Tab.Screen
-                name={TabScreenName.Restaurants}
-                component={RestaurantsScreen}
-              />
-              <Tab.Screen name={TabScreenName.Map} component={Map} />
-              <Tab.Screen name={TabScreenName.Settings} component={Settings} />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </RestaurantsContextProvider>
+        <LocationContextProvider>
+          <RestaurantsContextProvider>
+            <NavigationContainer>
+              <Tab.Navigator
+                screenOptions={props => createScreenOptions(props)}
+                tabBarOptions={{
+                  activeTintColor: "tomato",
+                  inactiveTintColor: "gray",
+                }}
+              >
+                <Tab.Screen
+                  name={TabScreenName.Restaurants}
+                  component={RestaurantsScreen}
+                />
+                <Tab.Screen name={TabScreenName.Map} component={Map} />
+                <Tab.Screen
+                  name={TabScreenName.Settings}
+                  component={Settings}
+                />
+              </Tab.Navigator>
+            </NavigationContainer>
+          </RestaurantsContextProvider>
+        </LocationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
